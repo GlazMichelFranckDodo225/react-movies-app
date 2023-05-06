@@ -1,11 +1,11 @@
 import './App.css';
 
-const Person = () => {
+const Person = (props) => {
   return (
     <>
-      <h1>Name : Jane</h1>
-      <h2>Last Name : Doe</h2>
-      <h2>Age : 30</h2>
+      <h1>Name : {props.name}</h1>
+      <h2>Last Name : {props.lastname}</h2>
+      <h2>Age : {props.age}</h2>
     </>
   )
 }
@@ -13,10 +13,16 @@ const Person = () => {
 const App = () => {
   return (
     <div className="App">
-      <Person />
-      <Person />
-      <Person />
-      <Person />
+      <Person 
+        name="John" 
+        lastname="Doe" 
+        age={25} 
+      />
+      <Person 
+        name="Mary" 
+        lastname="Doe" 
+        age={30} 
+      />
     </div>
   );
 }
