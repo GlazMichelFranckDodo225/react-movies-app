@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import { useEffect, useState } from "react";
 import './App.css'
 import SearchIcon from './search.svg'
 import MovieCard from "./MovieCard";
@@ -6,46 +6,49 @@ import MovieCard from "./MovieCard";
 // OMDb Api Key ==> 6ac94508
 const API_URL = 'http://www.omdbapi.com?apikey=6ac94508'
 
-const movie1 = {
-    "Title": "Amazing Spiderman Syndrome",
-    "Year": "2012",
-    "imdbID": "tt2586634",
-    "Type": "movie",
-    "Poster": "N/A"
-}
-
 const App = () => {
+    const [movies, setMovies] = useState([]);
+
     const searchMovies = async (title) => {
         const response = await fetch(`${API_URL}&s=${title}`)
         const data = await response.json()
 
-        console.log(data.Search)
+        setMovies(data.Search)
     }
 
     useEffect(() => {
         searchMovies('Spiderman')
     }, [])
 
-    return(
+    return (
         <div className="app">
             <h1>MovieLand</h1>
 
             <div className="search">
-                <input 
+                <input
                     placeholder="Search for movies"
                     value="Superman"
-                    onChange={() => {}}
+                    onChange={() => { }}
                 />
-                <img 
-                    src={SearchIcon} 
-                    alt="Search" 
-                    onClick={() => {}}
+                <img
+                    src={SearchIcon}
+                    alt="Search"
+                    onClick={() => { }}
                 />
-            </div>  
-
-            <div className="container">
-               <MovieCard movie1={movie1} />     
             </div>
+
+            {movies?.length > 0
+                ? (
+                    <div className="container">
+                        {movies.map((movie) => (
+                            <MovieCard movie={movie} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="empty">
+                        <h2>No movie found</h2>
+                    </div>
+                )}
         </div>
     )
 }
